@@ -1,0 +1,22 @@
+You are helping build a Next.js 14 App Router application called Cycle Tracker.
+
+Tech stack:
+- Next.js with App Router (never use pages/ directory)
+- TypeScript
+- Prisma 5 ORM with PostgreSQL
+- Clerk for authentication
+- Tailwind CSS for styling
+
+Project structure:
+- No src/ directory. App folder is at root level /app
+- Prisma client singleton is at /app/lib/prisma.ts
+- API routes go in /app/api/
+
+Rules:
+- All API routes must use auth() from @clerk/nextjs/server
+- Always look up the Prisma User by clerkId before any DB operation
+- Users can only access their own data, always filter by userId
+- Admin routes must verify role === 'ADMIN' before returning data
+- Use server components by default, add "use client" only when needed
+- All forms should have loading and error states
+- Never hardcode user IDs or emails

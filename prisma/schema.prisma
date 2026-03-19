@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cycles   Cycle[]
+  symptoms SymptomLog[]
+  notes    Note[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Cycle {
+  id           String    @id @default(cuid())
+  userId       String
+  startDate    DateTime
+  endDate      DateTime?
+  cycleLength  Int?
+  periodLength Int?
+  flow         FlowLevel @default(MEDIUM)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symptoms SymptomLog[]
+  notes    Note[]
+
+  @@index([userId])
+}
+
+enum FlowLevel {
+  SPOTTING
+  LIGHT
+  MEDIUM
+  HEAVY
+}
+
+model SymptomLog {
+  id        String   @id @default(cuid())
+  userId    String
+  cycleId   String?
+  date      DateTime
+  symptoms  String[]
+  mood      String?
+  createdAt DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cycle Cycle? @relation(fields: [cycleId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([cycleId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  cycleId   String?
+  content   String
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cycle Cycle? @relation(fields: [cycleId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+}
