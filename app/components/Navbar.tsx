@@ -8,6 +8,7 @@ const navLinks = [
   { href: '/cycles', label: 'Cycles' },
   { href: '/symptoms', label: 'Symptoms' },
   { href: '/notes', label: 'Notes' },
+  { href: '/resources', label: 'Find Help' },
 ]
 
 export default function Navbar() {
