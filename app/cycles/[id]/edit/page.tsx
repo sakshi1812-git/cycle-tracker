@@ -32,7 +32,7 @@ export default function EditCyclePage() {
   const [periodLength, setPeriodLength] = useState('')
 
   const [loading, setLoading] = useState(true)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function EditCyclePage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError('')
-    setIsSubmitting(true)
+    setIsLoading(true)
 
     try {
       const response = await fetch(`/api/cycles/${id}`, {
@@ -95,7 +95,7 @@ export default function EditCyclePage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
-      setIsSubmitting(false)
+      setIsLoading(false)
     }
   }
 
@@ -222,10 +222,20 @@ export default function EditCyclePage() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 py-2.5 font-medium text-white transition hover:from-pink-600 hover:to-purple-600 disabled:cursor-not-allowed disabled:opacity-70"
+                disabled={isLoading}
+                className="w-full bg-pink-500 text-white rounded-xl py-2 font-medium hover:bg-pink-600 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isSubmitting ? 'Saving...' : 'Save Changes'}
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                    </svg>
+                    Saving...
+                  </>
+                ) : (
+                  'Save'
+                )}
               </button>
             </form>
           </div>
