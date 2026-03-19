@@ -34,14 +34,7 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center">
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: 'h-9 w-9',
-              },
-            }}
-          />
+          <UserButton />
         </div>
       </div>
     </header>
