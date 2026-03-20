@@ -112,10 +112,14 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
         </div>
 
         <div className="rounded-2xl border border-pink-100 bg-white p-6 shadow-sm">
+          <div className="mb-6 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 p-6 text-white">
+            <h1 className="text-3xl font-bold">Cycle Calendar 📅</h1>
+            <p className="mt-1 text-sm text-white/90">
+              Track your period and predictions beautifully.
+            </p>
+          </div>
+
           <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-3xl font-bold text-pink-800">
-              Cycle Calendar 📅
-            </h1>
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -128,7 +132,7 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
                     )
                   )
                 }
-                className="rounded-xl border border-pink-200 bg-pink-50 px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-100"
+                className="border-2 border-pink-300 text-pink-500 hover:bg-pink-50 rounded-xl px-4 py-2 text-sm font-medium transition"
               >
                 Previous Month
               </button>
@@ -143,7 +147,7 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
                     )
                   )
                 }
-                className="rounded-xl border border-purple-200 bg-purple-50 px-3 py-2 text-sm font-medium text-purple-700 transition hover:bg-purple-100"
+                className="border-2 border-pink-300 text-pink-500 hover:bg-pink-50 rounded-xl px-4 py-2 text-sm font-medium transition"
               >
                 Next Month
               </button>
@@ -157,7 +161,10 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
             })}
           </p>
 
-          <div className="grid grid-cols-7 gap-2">
+          <div
+            key={`${currentMonth.getFullYear()}-${currentMonth.getMonth()}`}
+            className="grid grid-cols-7 gap-2 animate-[bounce_0.45s_ease]"
+          >
             {dayLabels.map((label) => (
               <div
                 key={label}
@@ -175,16 +182,17 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
               const isToday = sameDay(day, today)
 
               let dayClasses =
-                'relative min-h-16 rounded-xl border p-2 text-sm transition '
+                'relative min-h-16 rounded-xl border p-2 text-sm transition hover:bg-pink-50 '
 
               if (!isCurrentMonth) {
                 dayClasses +=
-                  'border-transparent bg-gray-50 text-gray-300 '
+                  'border-transparent bg-gray-50 text-gray-300 hover:bg-gray-50 '
               } else if (isPeriod) {
-                dayClasses += 'border-rose-200 bg-rose-100 text-rose-700 '
+                dayClasses +=
+                  'border-rose-300 bg-gradient-to-br from-rose-400 to-pink-400 text-white '
               } else if (isPredicted) {
                 dayClasses +=
-                  'border-purple-200 bg-purple-100 text-purple-700 '
+                  'border-purple-200 bg-gradient-to-br from-purple-100 to-fuchsia-100 text-purple-700 '
               } else {
                 dayClasses += 'border-pink-100 bg-white text-gray-700 '
               }
@@ -195,7 +203,7 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
                     <span
                       className={
                         isToday
-                          ? 'inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-gray-400 bg-white text-xs font-semibold text-gray-700'
+                          ? 'inline-flex h-7 w-7 items-center justify-center rounded-full bg-pink-500 text-xs font-semibold text-white'
                           : 'text-xs font-medium'
                       }
                     >
@@ -207,10 +215,16 @@ export default function CalendarClient({ cycles }: CalendarClientProps) {
             })}
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 rounded-xl border border-pink-100 bg-pink-50/40 p-4 text-sm text-gray-700">
-            <span>🔴 Period days</span>
-            <span>🟣 Predicted next period</span>
-            <span>⚪ Today</span>
+          <div className="mt-6 flex flex-wrap items-center gap-3 rounded-xl border border-pink-100 bg-pink-50/40 p-4">
+            <span className="rounded-full bg-gradient-to-r from-rose-400 to-pink-400 px-3 py-1 text-xs font-semibold text-white">
+              Period days
+            </span>
+            <span className="rounded-full bg-gradient-to-r from-purple-200 to-fuchsia-200 px-3 py-1 text-xs font-semibold text-purple-800">
+              Predicted next period
+            </span>
+            <span className="rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold text-white">
+              Today
+            </span>
           </div>
         </div>
       </div>

@@ -16,6 +16,16 @@ const symptomOptions = [
 ] as const
 
 const moodOptions = ['happy', 'calm', 'tired', 'irritable', 'anxious', 'sad'] as const
+const symptomEmoji: Record<string, string> = {
+  cramps: '😣',
+  bloating: '🫃',
+  headache: '🤕',
+  fatigue: '😴',
+  'mood swings': '😤',
+  'tender breasts': '💗',
+  backache: '😖',
+  nausea: '🤢',
+}
 
 export default function NewSymptomPage() {
   const router = useRouter()
@@ -100,7 +110,7 @@ export default function NewSymptomPage() {
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none transition-all duration-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
               />
             </div>
 
@@ -112,15 +122,21 @@ export default function NewSymptomPage() {
                 {symptomOptions.map((symptom) => (
                   <label
                     key={symptom}
-                    className="flex items-center gap-2 rounded-xl border border-pink-100 bg-pink-50/40 px-3 py-2 text-sm text-gray-700"
+                    className={`cursor-pointer rounded-xl border px-3 py-3 text-sm transition-all duration-200 ${
+                      selectedSymptoms.includes(symptom)
+                        ? 'bg-pink-100 border-pink-400 scale-105 text-pink-800'
+                        : 'bg-white border-gray-200 text-gray-700'
+                    }`}
                   >
                     <input
                       type="checkbox"
                       checked={selectedSymptoms.includes(symptom)}
                       onChange={() => toggleSymptom(symptom)}
-                      className="h-4 w-4 accent-pink-500"
+                      className="sr-only"
                     />
-                    <span className="capitalize">{symptom}</span>
+                    <span className="font-medium">
+                      {(symptomEmoji[symptom] ?? '🌸') + ' ' + symptom}
+                    </span>
                   </label>
                 ))}
               </div>
@@ -137,7 +153,7 @@ export default function NewSymptomPage() {
                 id="mood"
                 value={mood}
                 onChange={(e) => setMood(e.target.value)}
-                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none transition-all duration-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
               >
                 <option value="">Select mood</option>
                 {moodOptions.map((moodValue) => (
@@ -157,7 +173,7 @@ export default function NewSymptomPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-pink-500 text-white rounded-xl py-2 font-medium hover:bg-pink-600 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-xl py-2 font-medium transition hover:from-pink-600 hover:to-purple-600 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

@@ -10,6 +10,26 @@ type SymptomLog = {
   mood: string | null
 }
 
+const symptomEmoji: Record<string, string> = {
+  cramps: '😣',
+  bloating: '🫃',
+  headache: '🤕',
+  fatigue: '😴',
+  'mood swings': '😤',
+  'tender breasts': '💗',
+  backache: '😖',
+  nausea: '🤢',
+}
+
+const moodEmoji: Record<string, string> = {
+  happy: '😊',
+  calm: '😌',
+  tired: '😴',
+  irritable: '😤',
+  anxious: '😰',
+  sad: '😢',
+}
+
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString()
 }
@@ -119,7 +139,10 @@ export default function SymptomsPage() {
                     {formatDate(log.date)}
                   </h2>
                   <span className="w-fit rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
-                    Mood: {log.mood ?? 'Not set'}
+                    Mood:{' '}
+                    {log.mood
+                      ? `${moodEmoji[log.mood] ?? '🙂'} ${log.mood}`
+                      : 'Not set'}
                   </span>
                 </div>
 
@@ -127,9 +150,9 @@ export default function SymptomsPage() {
                   {log.symptoms.map((symptom) => (
                     <span
                       key={symptom}
-                      className="rounded-full bg-pink-100 px-3 py-1 text-xs font-medium capitalize text-pink-700"
+                      className="rounded-full border border-pink-200 bg-gradient-to-r from-pink-100 to-purple-100 px-3 py-1 text-xs font-medium capitalize text-pink-700"
                     >
-                      {symptom}
+                      {(symptomEmoji[symptom] ?? '🌸') + ' ' + symptom}
                     </span>
                   ))}
                 </div>

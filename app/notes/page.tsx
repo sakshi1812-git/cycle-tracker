@@ -112,13 +112,17 @@ export default function NotesPage() {
 
         {!loading && !error && notes.length > 0 && (
           <div className="grid grid-cols-1 gap-5">
-            {notes.map((note) => (
+            {notes.map((note, index) => (
               <div
                 key={note.id}
-                className="rounded-2xl border border-pink-100 bg-white p-6 shadow-sm"
+                className={`rotate-1 rounded-2xl border p-6 shadow-sm ${
+                  index % 2 === 0
+                    ? 'border-yellow-200 bg-yellow-100/80'
+                    : 'border-pink-200 bg-pink-100/80'
+                }`}
               >
                 <p className="mb-2 text-sm font-medium text-purple-700">
-                  {formatDate(note.date)}
+                  ✏️ {formatDate(note.date)}
                 </p>
                 <p className="mb-4 text-gray-700">{previewContent(note.content)}</p>
 

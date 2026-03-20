@@ -55,13 +55,15 @@ export default function NewCyclePage() {
     <div className="min-h-screen bg-pink-50">
       <div className="mx-auto max-w-2xl px-4 py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-pink-800">Log New Cycle 🌸</h1>
+          <h1 className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-3xl font-bold text-transparent">
+            Log New Cycle 🌸
+          </h1>
           <p className="mt-1 text-pink-500">
             Track your cycle details to build better predictions.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-pink-100 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-pink-100 bg-pink-50/60 p-6 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
@@ -76,7 +78,7 @@ export default function NewCyclePage() {
                 required
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                className="w-full rounded-xl border border-pink-200 bg-white px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
               />
             </div>
 
@@ -92,7 +94,7 @@ export default function NewCyclePage() {
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                className="w-full rounded-xl border border-pink-200 bg-white px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
               />
             </div>
 
@@ -107,7 +109,7 @@ export default function NewCyclePage() {
                 id="flow"
                 value={flow}
                 onChange={(e) => setFlow(e.target.value as FlowLevel)}
-                className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                className="w-full rounded-xl border border-pink-200 bg-white px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
               >
                 <option value="SPOTTING">SPOTTING</option>
                 <option value="LIGHT">LIGHT</option>
@@ -130,7 +132,7 @@ export default function NewCyclePage() {
                   min={1}
                   value={cycleLength}
                   onChange={(e) => setCycleLength(e.target.value)}
-                  className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                  className="w-full rounded-xl border border-pink-200 bg-white px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
                 />
               </div>
 
@@ -147,7 +149,7 @@ export default function NewCyclePage() {
                   min={1}
                   value={periodLength}
                   onChange={(e) => setPeriodLength(e.target.value)}
-                  className="w-full rounded-xl border border-pink-200 px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+                  className="w-full rounded-xl border border-pink-200 bg-white px-3 py-2 text-gray-800 outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-300"
                 />
               </div>
             </div>

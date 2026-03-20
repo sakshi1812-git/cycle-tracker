@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
 
 const navLinks = [
@@ -12,12 +13,14 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
+
   return (
-    <header className="sticky top-0 z-40 border-b border-pink-100 bg-white/90 backdrop-blur">
+    <header className="backdrop-blur-md bg-white/70 border-b border-pink-100 sticky top-0 z-50 shadow-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link
           href="/dashboard"
-          className="text-lg font-bold text-pink-700 transition hover:text-purple-700"
+          className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold text-xl"
         >
           🌸 Cycle Tracker
         </Link>
@@ -27,7 +30,11 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-50 hover:text-purple-700"
+              className={`relative rounded-lg px-3 py-2 text-sm transition ${
+                pathname === link.href
+                  ? 'font-bold text-pink-600'
+                  : "font-medium text-pink-700 hover:text-purple-700 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-pink-400 hover:after:w-full after:transition-all after:duration-300"
+              }`}
             >
               {link.label}
             </Link>

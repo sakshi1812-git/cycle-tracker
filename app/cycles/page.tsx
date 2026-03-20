@@ -17,6 +17,39 @@ function formatDate(date: string | null) {
   return new Date(date).toLocaleDateString()
 }
 
+function getFlowGradient(flow: Cycle['flow']) {
+  if (flow === 'HEAVY') return 'from-red-50 to-pink-50'
+  if (flow === 'MEDIUM') return 'from-pink-50 to-rose-50'
+  if (flow === 'LIGHT') return 'from-purple-50 to-pink-50'
+  return 'from-rose-50 to-white'
+}
+
+function getFlowBadge(flow: Cycle['flow']) {
+  if (flow === 'HEAVY') return 'bg-red-100 text-red-700 border border-red-200'
+  if (flow === 'MEDIUM') return 'bg-pink-100 text-pink-700 border border-pink-200'
+  if (flow === 'LIGHT') return 'bg-purple-100 text-purple-700 border border-purple-200'
+  return 'bg-rose-100 text-rose-700 border border-rose-200'
+}
+
+function getMoonPhaseEmoji(startDate: string, cycleLength: number | null) {
+  const totalLength = cycleLength ?? 28
+  const daysSinceStart = Math.max(
+    0,
+    Math.floor((Date.now() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24))
+  )
+  const dayInCycle = (daysSinceStart % totalLength) + 1
+  const phase = dayInCycle / totalLength
+
+  if (phase < 0.125) return '🌑'
+  if (phase < 0.25) return '🌒'
+  if (phase < 0.375) return '🌓'
+  if (phase < 0.5) return '🌔'
+  if (phase < 0.625) return '🌕'
+  if (phase < 0.75) return '🌖'
+  if (phase < 0.875) return '🌗'
+  return '🌘'
+}
+
 export default function CyclesPage() {
   const [cycles, setCycles] = useState<Cycle[]>([])
   const [loading, setLoading] = useState(true)
@@ -93,11 +126,12 @@ export default function CyclesPage() {
             {cycles.map((cycle) => (
               <div
                 key={cycle.id}
-                className="rounded-2xl border border-pink-100 bg-white p-6 shadow-sm"
+                className={`rounded-2xl border border-pink-100 bg-gradient-to-r ${getFlowGradient(cycle.flow)} p-6 shadow-sm hover:scale-[1.02] hover:shadow-md transition-all`}
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>
                     <h2 className="text-lg font-semibold text-gray-800">
+                      <span className="mr-2">{getMoonPhaseEmoji(cycle.startDate, cycle.cycleLength)}</span>
                       Cycle Start: {formatDate(cycle.startDate)}
                     </h2>
                     <p className="mt-1 text-sm text-gray-500">
@@ -105,7 +139,7 @@ export default function CyclesPage() {
                     </p>
                   </div>
 
-                  <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
+                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${getFlowBadge(cycle.flow)}`}>
                     {cycle.flow}
                   </span>
                 </div>
