@@ -1,12 +1,14 @@
-import { redirect } from 'next/navigation'
-import { currentUser } from '@clerk/nextjs/server'
+import { SignUp } from '@clerk/nextjs'
 
-export default async function Home() {
-  const user = await currentUser()
-
-  if (user) {
-    redirect('/dashboard')
-  } else {
-    redirect('/sign-in')
-  }
+export default function SignUpPage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-pink-50 to-purple-50 px-4 py-10">
+      <SignUp
+        routing="path"
+        path="/sign-up"
+        signInUrl="/sign-in"
+        fallbackRedirectUrl="/dashboard"
+      />
+    </div>
+  )
 }
